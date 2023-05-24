@@ -3,15 +3,15 @@ create table engine(
     name varchar
 );
 
-create table car(
-    id serial primary key,
-    owner_id int not null unique references owners(id)
-    engine_id int not null unique references engine(id)
-);
-
 create table owners(
     id serial primary key,
     name varchar
+);
+
+create table car(
+    id serial primary key,
+    owner_id int not null unique references owners(id),
+    engine_id int not null unique references engine(id)
 );
 
 create table history_owner(
