@@ -18,11 +18,19 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @EqualsAndHashCode.Include
     private int id;
+
     private String description;
+
     private LocalDateTime created;
+
     @ManyToOne
     @JoinColumn(name = "auto_user_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "auto_post_id")
     private List<PriceHistory> histories = new ArrayList<>();
@@ -34,4 +42,7 @@ public class Post {
             inverseJoinColumns = { @JoinColumn(name = "post_id") }
     )
     private List<User> participates = new ArrayList<>();
+    @OneToMany
+    @JoinColumn(name = "post_id")
+    private List<File> files = new ArrayList<>();
 }
