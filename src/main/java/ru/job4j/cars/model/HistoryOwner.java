@@ -5,14 +5,12 @@ import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @Entity
-@Table(name = "history")
+@Table(name = "history_owner")
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class History {
+public class HistoryOwner {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,11 +18,10 @@ public class History {
     private int id;
     private LocalDateTime startAt;
     private LocalDateTime endAt;
-    @ManyToMany
-    @JoinTable(
-            name = "history_owner",
-            joinColumns = { @JoinColumn(name = "owner_id") },
-            inverseJoinColumns = { @JoinColumn(name = "car_id") }
-    )
-    private List<Owner> owners = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Owner owner;
+    @ManyToOne
+    @JoinColumn(name = "car_id")
+    private Car car;
 }
