@@ -14,8 +14,9 @@ public class OwnerRepository {
 
     private final CrudRepository repository;
 
-    public void save(Owner owner) {
+    public Owner save(Owner owner) {
         repository.run(session -> session.persist(owner));
+        return owner;
     }
 
     public Optional<Owner> findById(int id) {
@@ -24,5 +25,9 @@ public class OwnerRepository {
 
     public List<Owner> findAll() {
         return repository.query("from Owner", Owner.class);
+    }
+
+    public boolean delete(int id) {
+        return repository.booleanRun("delete from Owner where id = :eId", Map.of("eId", id));
     }
 }

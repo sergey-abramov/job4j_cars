@@ -14,8 +14,9 @@ public class CarRepository {
 
     private final CrudRepository repository;
 
-    public void save(Car car) {
+    public Car save(Car car) {
         repository.run(session -> session.persist(car));
+        return car;
     }
 
     public Optional<Car> findById(int id) {

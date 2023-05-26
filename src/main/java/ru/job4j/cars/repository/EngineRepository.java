@@ -14,8 +14,9 @@ public class EngineRepository {
 
     private final CrudRepository repository;
 
-    public void save(Engine engine) {
+    public Engine save(Engine engine) {
         repository.run(session -> session.persist(engine));
+        return engine;
     }
 
     public Optional<Engine> findById(int id) {
@@ -24,5 +25,9 @@ public class EngineRepository {
 
     public List<Engine> findAll() {
         return repository.query("from Engine", Engine.class);
+    }
+
+    public boolean delete(int id) {
+        return repository.booleanRun("delete from Engine where id = :eId", Map.of("eId", id));
     }
 }
