@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 import ru.job4j.cars.model.Post;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -27,12 +28,12 @@ public class PostRepository {
     }
 
     public List<Post> findByLastDay() {
-        return repository.query("from Post p where p.created >= (select max(created) from Post)",
-                Post.class);
+        return repository.query("from Post p where p.created >= :time",
+                Post.class, Map.of("time", LocalDateTime.now().minusHours(24)));
     }
 
     public List<Post> findByCar(String carName) {
-        return repository.query("from Post p WHERE p.car.name like :fName",
+        return repository.query("from Post p WHERE p.car.name = :fName",
                 Post.class, Map.of("fName", carName));
     }
 
